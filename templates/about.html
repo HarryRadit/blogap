@@ -7,7 +7,35 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 	</head>
 </head>
+
+
 <body>
+<div id="wrapper">
+	<header id="header">
+						<h1><a href="{{url_for('home')}}">Future Imperfect</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="{{url_for('home')}}">Home</a></li>
+								<li><a href="{{url_for('post') }}">Post</a></li>
+								<li><a href="{{url_for('about') }}">About</a></li>
+								<li><a href="{{url_for('login') }}">Login</a></li>
+								<li><a href="{{url_for('contact') }}">Contact</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Search" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
 <div id="main">
 							<article class="post">
 								<header>
@@ -23,6 +51,13 @@
 
 					</div>
 
+</div>
+<!-- Scripts -->
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
 </body>
 </html>
