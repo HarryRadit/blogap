@@ -1,39 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Future Imperfect by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-	</head>
-</head>
-<body class="is-preload">
-<div id="wrapper">
-<header id="header">
-						<h1><a href="{{url_for('home')}}">Future Imperfect</a></h1>
-						<nav class="links">
-							<ul>
-								<li><a href="{{url_for('home')}}">Home</a></li>
-								<li><a href="{{url_for('post') }}">Post</a></li>
-								<li><a href="{{url_for('about') }}">About</a></li>
-								<li><a href="{{url_for('login') }}">Login</a></li>
-								<li><a href="{{url_for('contact') }}">Contact</a></li>
-							</ul>
-						</nav>
-						<nav class="main">
-							<ul>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Search" />
-									</form>
-								</li>
-								<li class="menu">
-									<a class="fa-bars" href="#menu">Menu</a>
-								</li>
-							</ul>
-						</nav>
-					</header>
+{% extends "base.html" %}
+{% block title%}  {% endblock %}
+{% block body %}
+
+
  <div class="container">
         <h2>Contact Us</h2>
         <form>
@@ -46,6 +15,5 @@
             <button type="submit" class="button large "> Submit</button>
         </form>
     </div>
-</div>
-</body>
-</html>
+
+{% endblock %}
