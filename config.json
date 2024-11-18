@@ -1,0 +1,9 @@
+{
+  "parameters": {
+    "secret_key": "YES",
+    "local_server": true,
+    "local_uri": "mysql://root@localhost/blogapp",
+    "prod_uri": "",
+    "title": "Travel Blog"
+  }
+}
