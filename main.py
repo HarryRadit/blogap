@@ -26,23 +26,33 @@ class Contact(db.Model):
    message = db.Column(db.Text, nullable=False)
    date = db.Column(db.String(20), nullable = True)
 
+class Posts(db.Model):
+    post_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    sub_title = db.Column(db.String(100))
+    location = db.Column(db.String(100))
+    author = db.Column(db.String(100))
+    #data_posted = db.Column(db.Date)
+    content_1 =  db.Column(db.Text)
+    content_2 =  db.Column(db.Text)
 
-@app.route('/login')
-def login():
-   return render_template('login.html', param=params)
-@app.route('/')
+
+
+@app.route('/', methods=['GET', 'POST'])
 def home():
-   return render_template('index.html')
+    db.session.commit()
+    post_data = Posts.query.all()
+    return render_template('index.html', param=params, posts=post_data)
 
 
 @app.route('/post')
 def post():
-   return render_template('post.html')
+   return render_template('post.html', param=params)
 
 
 @app.route('/about')
 def about():
-   return render_template('about.html')
+   return render_template('about.html', param=params)
 
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -54,18 +64,18 @@ def contact():
        entry = Contact(name=name, email=email, message=Msg, date = datetime.today().date())
        db.session.add(entry)
        db.session.commit()
-   return render_template('contact.html')
+   return render_template('contact.html', param=params)
 
 
 @app.route('/login')
 def login():
-   return render_template('login.html')
+   return render_template('login.html', param=params)
 
 
 if __name__ == '__main__':
    with app.app_context():
        db.create_all()
-       app.run(debug=True, port=8080)
+       app.run(debug=True)
 
 
 
