@@ -32,6 +32,7 @@ class Posts(db.Model):
     sub_title = db.Column(db.String(100))
     location = db.Column(db.String(100))
     author = db.Column(db.String(100))
+    image = db.Column(db.String(100))
     #data_posted = db.Column(db.Date)
     content_1 =  db.Column(db.Text)
     content_2 =  db.Column(db.Text)

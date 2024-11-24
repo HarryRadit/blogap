@@ -91,19 +91,22 @@
     </header>
 </section>
 						<!-- Post -->
+						{% for post in posts %}
 							<article class="post">
 								<header>
 									<div class="title">
-										<h2><a href="single.html">Magna sed adipiscing</a></h2>
+										<h2><a href="single.html">{{post['title']}}</a></h2>
 										<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
 									</div>
 									<div class="meta">
 										<time class="published" datetime="2015-11-01">November 1, 2015</time>
-										<a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+										<a href="#" class="author"><span class="name">{{post['author']}}</span><img src="images/avatar.jpg" alt="" /></a>
 									</div>
 								</header>
-								<a href="single.html" class="image featured"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGx4_h8WBE1kaxotI1Q0mY82CS9krwnyjNbQ&s" alt="" /></a>
+								<a href="single.html" class="image featured"><img src="{{post['image']}}" alt="" /></a>
 								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+
+								<p> {{post['sub_title']}}</p>
 								<footer>
 									<ul class="actions">
 										<li><a href="single.html" class="button large">Continue Reading</a></li>
@@ -116,10 +119,7 @@
 								</footer>
 							</article>
 
-
-
-
-
+							{% endfor %}
 						<!-- Pagination -->
 							<ul class="actions pagination">
 								<li><a href="" class="disabled button large previous">Previous Page</a></li>
