@@ -36,6 +36,7 @@ class Posts(db.Model):
     #data_posted = db.Column(db.Date)
     content_1 =  db.Column(db.Text)
     content_2 =  db.Column(db.Text)
+    slug = db.Column(db.String(100), unique = True)
 
 
 
@@ -46,9 +47,10 @@ def home():
     return render_template('index.html', param=params, posts=post_data)
 
 
-@app.route('/post')
-def post():
-   return render_template('post.html', param=params)
+@app.route('/post/', methods=['GET', 'POST'])
+def post(slug):
+   single_post= Posts.query.filter_by(slug=slug).first()
+   return render_template('post.html', param=params, post = single_post)
 
 
 @app.route('/about')
