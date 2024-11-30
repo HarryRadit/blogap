@@ -10,7 +10,7 @@
 						<nav class="links">
 							<ul>
 								<li><a href="{{url_for('home')}}">Home</a></li>
-								<li><a href="{{url_for('post') }}">Post</a></li>
+
 								<li><a href="{{url_for('about') }}">About</a></li>
 								<li><a href="{{url_for('login') }}">Login</a></li>
 								<li><a href="{{url_for('contact') }}">Contact</a></li>
@@ -109,7 +109,7 @@
 								<p> {{post['sub_title']}}</p>
 								<footer>
 									<ul class="actions">
-										<li><a href="single.html" class="button large">Continue Reading</a></li>
+										<li><a href="/post/{{post.slug}}" class="button large">Continue Reading</a></li>
 									</ul>
 									<ul class="stats">
 										<li><a href="#">General</a></li>
@@ -122,8 +122,8 @@
 							{% endfor %}
 						<!-- Pagination -->
 							<ul class="actions pagination">
-								<li><a href="" class="disabled button large previous">Previous Page</a></li>
-								<li><a href="#" class="button large next">Next Page</a></li>
+								<li><a href="{{prev}}" class="button large previous">Previous Page</a></li>
+								<li><a href="{{next}}" class="button large next">Next Page</a></li>
 							</ul>
 
 					</div>

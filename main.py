@@ -1,4 +1,5 @@
 import json
+import math
 
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -44,10 +45,30 @@ class Posts(db.Model):
 def home():
     db.session.commit()
     post_data = Posts.query.all()
-    return render_template('index.html', param=params, posts=post_data)
+    n=2
+    last = math.ceil((len(post_data)/n))
+    page = request.args.get('page')
+
+    if (not str(page).isnumeric()):
+        page = 1
+    page = int(page)
+    j=(page-1)*n
+    posts = post_data[j:j+n]
+
+    if page==1:
+        prev = "#"
+        next = "/?page="+str(page+1)
+    elif page==last:
+        prev = "/?page="+str(page-1)
+        next = "#"
+    else:
+        prev = "/?page="+str(page-1)
+        next = "/?page="+str(page+1)
+
+    return render_template('index.html', param=params, posts=post_data, prev=prev, next=next)
 
 
-@app.route('/post/', methods=['GET', 'POST'])
+@app.route('/post/<slug>', methods=['GET', 'POST'])
 def post(slug):
    single_post= Posts.query.filter_by(slug=slug).first()
    return render_template('post.html', param=params, post = single_post)
