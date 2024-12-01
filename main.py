@@ -94,7 +94,11 @@ def contact():
 @app.route('/login')
 def login():
    return render_template('login.html', param=params)
-
+@app.route('/admin')
+def dashboard():
+    posts = Posts.query.all()
+    contacts = Contact.query.filter_by().all()
+    return render_template('admin/index.html', param=params, posts=Posts, contact=Contact)
 
 if __name__ == '__main__':
    with app.app_context():
