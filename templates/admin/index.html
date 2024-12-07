@@ -38,10 +38,14 @@
    <tr>
      <th scope="row">{{post.post_id}}</th>
      <td>{{post.title}}</td>
-    <td><a>
+    <td><a href="/editPosts/{{post.post_id}}">
         <button type="button" class="btn btn-info">Edit</button>
+    </a></td>
+
+
+    <td><a>
         <button type="button" class="btn btn-danger">Delete</button>
-       </a></td>
+    </a></td>
 
    </tr>
    {% endfor %}

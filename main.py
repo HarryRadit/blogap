@@ -97,9 +97,23 @@ def login():
 @app.route('/admin', methods=['GET', 'POST'])
 def dashboard():
     posts = Posts.query.filter_by().all()
-    print(posts)
     contacts = Contact.query.filter_by().all()
     return render_template('admin/index.html', posts=posts, contacts=contacts)
+@app.route('/editPosts/<string:post_id>', methods=['GET', 'POST'])
+def edit(post_id):
+    if request.method == 'POST':
+        ntitle = request.form['title']
+        nsubtitle = request.form['subTitle']
+        if post_id == '0':
+            pass
+        else:
+            post = Posts.query.filter_by(post_id=post_id).first()
+            post.title = ntitle
+            post.sub_title = nsubtitle
+         return redirect(url_for('dashboard'))
+
+
+    return render_template('admin/editPost.html', param=params, post_id=post_id)
 if __name__ == '__main__':
    with app.app_context():
        db.create_all()
