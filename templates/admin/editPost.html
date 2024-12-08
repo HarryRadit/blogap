@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Edit admin</h1>
-    <form method="post" action='/admin'>
+    <form method="post" action='/editPosts/{{post_id}}'>
   <div class="row mb-3">
     <label for="title" class="col-sm-2 col-form-label">Enter post title</label>
     <div class="col-sm-10">
@@ -19,6 +19,18 @@
     <label for="inputPassword3" class="col-sm-2 col-form-label">subTitle</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="inputPassword3" name="subTitle">
+    </div>
+  </div>
+          <div class="row mb-3">
+    <label for="location" class="col-sm-2 col-form-label">location</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="location" name="location">
+    </div>
+  </div>
+      <div class="row mb-3">
+    <label for="slug" class="col-sm-2 col-form-label">slug</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="slug" name="slug">
     </div>
   </div>
 

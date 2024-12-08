@@ -31,13 +31,13 @@ class Posts(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     sub_title = db.Column(db.String(100))
-    location = db.Column(db.String(100))
-    author = db.Column(db.String(100))
-    image = db.Column(db.String(100))
+    location = db.Column(db.String(100), nullable = True)
+    author = db.Column(db.String(100), nullable = True)
+    image = db.Column(db.String(100), nullable = True)
     #data_posted = db.Column(db.Date)
-    content_1 =  db.Column(db.Text)
-    content_2 =  db.Column(db.Text)
-    slug = db.Column(db.String(100), unique = True)
+    content_1 =  db.Column(db.Text, nullable = True)
+    content_2 =  db.Column(db.Text, nullable = True)
+    slug = db.Column(db.String(100), unique = True, nullable = True)
 
 
 
@@ -104,14 +104,21 @@ def edit(post_id):
     if request.method == 'POST':
         ntitle = request.form['title']
         nsubtitle = request.form['subTitle']
+        locationname = request.form['location']
+        slugn = request.form['slug']
         if post_id == '0':
-            pass
+            post = Posts(title=ntitle, sub_title=nsubtitle)
+            db.session.add(post)
+            db.session.commit()
         else:
             post = Posts.query.filter_by(post_id=post_id).first()
             post.title = ntitle
             post.sub_title = nsubtitle
-         return redirect(url_for('dashboard'))
-
+            post.location = locationname
+            post.slug = slugn
+            db.session.commit()
+        return redirect(url_for('dashboard'))
+    post = Posts.query.filter_by(post_id=post_id).first()
 
     return render_template('admin/editPost.html', param=params, post_id=post_id)
 if __name__ == '__main__':
