@@ -39,6 +39,12 @@ class Posts(db.Model):
     content_2 =  db.Column(db.Text, nullable = True)
     slug = db.Column(db.String(100), unique = True, nullable = True)
 
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -120,7 +126,10 @@ def edit(post_id):
         return redirect(url_for('dashboard'))
     post = Posts.query.filter_by(post_id=post_id).first()
 
-    return render_template('admin/editPost.html', param=params, post_id=post_id)
+    return render_template('admin/editPost.html', param=params, post_id=post_id, post=post)
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+    return render_template('signup.html', param=params)
 if __name__ == '__main__':
    with app.app_context():
        db.create_all()
