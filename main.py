@@ -4,6 +4,7 @@ import math
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import *
+from flask_login import LoginManager, login_user, login_required, current_user, UserMixin
 app = Flask(__name__)
 
 with open("config.json", "r") as c:
@@ -39,7 +40,7 @@ class Posts(db.Model):
     content_2 =  db.Column(db.Text, nullable = True)
     slug = db.Column(db.String(100), unique = True, nullable = True)
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
@@ -74,6 +75,9 @@ def home():
     return render_template('index.html', param=params, posts=post_data, prev=prev, next=next)
 
 
+
+
+
 @app.route('/post/<slug>', methods=['GET', 'POST'])
 def post(slug):
    single_post= Posts.query.filter_by(slug=slug).first()
@@ -99,7 +103,17 @@ def contact():
 
 @app.route('/login')
 def login():
-   return render_template('login.html', param=params)
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = Users.query.filter_by(username=username).first()
+        if user and user.password == password:
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            print("Invalid username or password")
+            return redirect(url_for('login'))
+    return render_template('login.html', param=params)
 @app.route('/admin', methods=['GET', 'POST'])
 def dashboard():
     posts = Posts.query.filter_by().all()
@@ -129,7 +143,24 @@ def edit(post_id):
     return render_template('admin/editPost.html', param=params, post_id=post_id, post=post)
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        entry = Users(name=name, email=email, username=username, password=password)
+        db.session.add(entry)
+        db.session.commit()
     return render_template('signup.html', param=params)
+#login manager
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
+
 if __name__ == '__main__':
    with app.app_context():
        db.create_all()
