@@ -11,6 +11,7 @@
                {{ messages[0] }} go to <a href="{{ url_for('login') }}">Login</a>
            </div>
         {% endif %}
+    {% endwith %}
         <form method="post" action="">
         <form >
             <label for = "name">Name:</label>
@@ -29,7 +30,10 @@
 
             <button type="submit" class="button large "> Sign up</button>
         </form>
-    <h5><a href="">Create an account</a> </h5>
-    </div>
+
+
+</form>
+</div>
 
 {% endblock %}
+

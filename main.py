@@ -1,12 +1,14 @@
 import json
 import math
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import *
-from flask_login import LoginManager, login_user, login_required, current_user, UserMixin
-app = Flask(__name__)
+from flask_login import LoginManager, login_user, login_required, current_user, UserMixin, logout_user
 
+app = Flask(__name__)
+import secrets
+app.secret_key = secrets.token_hex(16)
 with open("config.json", "r") as c:
     params = json.load(c)["parameters"]
 
@@ -101,7 +103,7 @@ def contact():
    return render_template('contact.html', param=params)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -111,7 +113,7 @@ def login():
             login_user(user)
             return redirect(url_for('dashboard'))
         else:
-            print("Invalid username or password")
+            flash("Invalid username or password")
             return redirect(url_for('login'))
     return render_template('login.html', param=params)
 @app.route('/admin', methods=['GET', 'POST'])
@@ -148,6 +150,10 @@ def signup():
         email = request.form.get('email')
         username = request.form.get('username')
         password = request.form.get('password')
+        user = Users.query.filter_by(email=email).first()
+        if user:
+            flash("Email already exists")
+            return redirect(url_for('signup'))
         entry = Users(name=name, email=email, username=username, password=password)
         db.session.add(entry)
         db.session.commit()
@@ -161,6 +167,18 @@ login_manager.init_app(app)
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+@app.route('/delete/<post_id>', methods=['GET', 'POST'])
+@login_required
+def delete(post_id):
+    post = Posts.query.filter_by(post_id=post_id).first()
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('admin'))
 if __name__ == '__main__':
    with app.app_context():
        db.create_all()

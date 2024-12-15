@@ -3508,6 +3508,7 @@ input, select, textarea {
 
 	body.single #footer {
 		text-align: center;
+		margin-top: 400px;
 	}
 
 /* Menu */

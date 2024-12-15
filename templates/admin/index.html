@@ -9,6 +9,8 @@
 </head>
 <body>
 <h1>Admin Dashboard</h1>
+<br>
+<h5> welcome {{current_user.username}}</h5>
 <p class="d-inline-flex gap-1">
    <a class="btn btn-primary" data-bs-toggle="collapse" href="#Posts" role="button" aria-expanded="false"
       aria-controls="collapseExample">
@@ -23,8 +25,8 @@
       Add new post
    </button>
 
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-           aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+           aria-expanded="false" aria-controls="collapseExample" onclick="window.location.href='/logout'">
       Logout
    </button>
 </p>
