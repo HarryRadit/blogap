@@ -178,7 +178,7 @@ def delete(post_id):
     post = Posts.query.filter_by(post_id=post_id).first()
     db.session.delete(post)
     db.session.commit()
-    return redirect(url_for('admin'))
+    return redirect(url_for('dashboard'))
 if __name__ == '__main__':
    with app.app_context():
        db.create_all()
